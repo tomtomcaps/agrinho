@@ -1,0 +1,787 @@
+cat > /mnt/user-data/outputs/agroforte/index.html << 'HTML_EOF'
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Agro Forte, Futuro Sustentável — Equilíbrio entre produção agrícola e preservação ambiental. Projeto educacional sobre sustentabilidade no agronegócio brasileiro." />
+  <meta property="og:title" content="Agro Forte, Futuro Sustentável" />
+  <meta property="og:description" content="Equilíbrio entre produção e meio ambiente no agronegócio brasileiro." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <title>Agro Forte, Futuro Sustentável</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css" />
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════
+       BARRA DE ACESSIBILIDADE
+  ════════════════════════════════════════ -->
+  <div class="a11y-bar" role="toolbar" aria-label="Ferramentas de acessibilidade">
+    <span class="a11y-label">Acessibilidade</span>
+
+    <div class="a11y-group" role="group" aria-label="Tamanho da fonte">
+      <button class="a11y-btn" id="btn-font-up"    title="Aumentar fonte"      aria-label="Aumentar fonte">A+</button>
+      <button class="a11y-btn" id="btn-font-reset"  title="Restaurar fonte"     aria-label="Restaurar fonte padrão">A</button>
+      <button class="a11y-btn" id="btn-font-down"   title="Diminuir fonte"      aria-label="Diminuir fonte">A−</button>
+    </div>
+
+    <span class="a11y-sep" aria-hidden="true"></span>
+
+    <div class="a11y-group" role="group" aria-label="Leitura em voz alta">
+      <button class="a11y-btn" id="btn-speech-play"  title="Iniciar leitura"   aria-label="Iniciar leitura da seção visível">&#9654;</button>
+      <button class="a11y-btn" id="btn-speech-pause" title="Pausar leitura"    aria-label="Pausar ou retomar leitura">&#9646;&#9646;</button>
+    </div>
+
+    <span class="a11y-sep" aria-hidden="true"></span>
+
+    <div class="a11y-group" role="group" aria-label="Tema visual">
+      <button class="a11y-btn" id="btn-theme-light"    title="Modo claro"       aria-label="Ativar modo claro">&#9728;</button>
+      <button class="a11y-btn" id="btn-theme-dark"     title="Modo escuro"      aria-label="Ativar modo escuro">&#9790;</button>
+      <button class="a11y-btn" id="btn-theme-contrast" title="Alto contraste"   aria-label="Ativar alto contraste">&#9680;</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       CABEÇALHO / NAVEGAÇÃO
+  ════════════════════════════════════════ -->
+  <header class="site-header" role="banner">
+    <nav class="nav-wrap" role="navigation" aria-label="Navegação principal">
+      <a href="#hero" class="nav-brand" aria-label="AgroForte — página inicial">
+        <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect width="32" height="32" rx="6" fill="var(--verde-primario)" opacity=".12"/>
+          <path d="M16 4 C10 10 8 15 16 28 C24 15 22 10 16 4Z" fill="var(--verde-primario)"/>
+          <path d="M8 19 C12 14 16 16 21 12" stroke="var(--verde-claro)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        </svg>
+        <span>AgroForte</span>
+      </a>
+
+      <button class="nav-toggle" id="nav-toggle"
+              aria-label="Abrir menu de navegação"
+              aria-expanded="false"
+              aria-controls="nav-menu">
+        <span class="hb"></span>
+        <span class="hb"></span>
+        <span class="hb"></span>
+      </button>
+
+      <ul class="nav-menu" id="nav-menu" role="list">
+        <li><a href="#sobre"       class="nav-link">Conceito</a></li>
+        <li><a href="#beneficios"  class="nav-link">Benefícios</a></li>
+        <li><a href="#tecnologias" class="nav-link">Tecnologias</a></li>
+        <li><a href="#dados"       class="nav-link">Dados</a></li>
+        <li><a href="#timeline"    class="nav-link">Histórico</a></li>
+        <li><a href="#comparacao"  class="nav-link">Comparação</a></li>
+        <li><a href="#quiz"        class="nav-link nav-cta">Quiz</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content" role="main">
+
+    <!-- ════════════════════════════════════════
+         1. HERO
+    ════════════════════════════════════════ -->
+    <section id="hero" class="hero" aria-labelledby="hero-titulo">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-grid-lines"></div>
+        <div class="hero-glow hero-glow-a"></div>
+        <div class="hero-glow hero-glow-b"></div>
+      </div>
+
+      <div class="hero-body container">
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-line"></span>
+          <span>Projeto Educacional · Sustentabilidade no Agronegócio</span>
+          <span class="hero-eyebrow-line"></span>
+        </div>
+
+        <h1 id="hero-titulo" class="hero-h1">
+          Agro Forte,<br>
+          <em>Futuro Sustentável</em>
+        </h1>
+
+        <p class="hero-sub">Equilíbrio entre produção agrícola e preservação ambiental</p>
+
+        <blockquote class="hero-quote">
+          <p>"A terra não é uma herança que recebemos de nossos pais — é um empréstimo que fazemos de nossos filhos."</p>
+          <footer><cite>Provérbio Indígena</cite></footer>
+        </blockquote>
+
+        <div class="hero-actions">
+          <a href="#sobre" class="btn btn-primary" aria-label="Explorar o conteúdo do site">
+            Explorar o conteúdo
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="#quiz" class="btn btn-outline">Iniciar Quiz</a>
+        </div>
+
+        <div class="hero-badges" aria-label="Pilares do projeto">
+          <span class="badge">Inovação</span>
+          <span class="badge">Sustentabilidade</span>
+          <span class="badge">Tecnologia</span>
+          <span class="badge">Responsabilidade</span>
+        </div>
+      </div>
+
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <span class="scroll-track"><span class="scroll-thumb"></span></span>
+        <span class="scroll-label">Rolar</span>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         2. O QUE É AGRO SUSTENTÁVEL
+    ════════════════════════════════════════ -->
+    <section id="sobre" class="section sobre" aria-labelledby="sobre-titulo">
+      <div class="container">
+        <header class="sec-head">
+          <p class="sec-label">Fundamentos</p>
+          <h2 id="sobre-titulo" class="sec-title">O que é Agronegócio Sustentável?</h2>
+          <div class="sec-divider" aria-hidden="true"></div>
+        </header>
+
+        <div class="sobre-layout">
+          <div class="sobre-texto">
+            <p>O agronegócio sustentável é a prática de produzir alimentos, fibras e energia de forma a <strong>satisfazer as necessidades do presente</strong> sem comprometer a capacidade das gerações futuras. Trata-se de um modelo que integra eficiência produtiva, <mark>responsabilidade ambiental</mark> e justiça social em um único sistema coerente.</p>
+            <p>Diferente do modelo convencional, essa abordagem reconhece que solo, água e biodiversidade são <strong>ativos finitos e preciosos</strong>. Cada decisão — do plantio à colheita — considera o impacto de longo prazo sobre os ecossistemas, o clima e as comunidades rurais.</p>
+            <p>O Brasil, com sua posição de <mark>liderança global</mark> na produção de alimentos, tem papel decisivo nessa transformação. Unir a força produtiva do campo brasileiro com práticas que regeneram o meio ambiente não é apenas possível — é o caminho inevitável para um futuro próspero e seguro.</p>
+          </div>
+
+          <aside class="sobre-pilares" aria-label="Três pilares da sustentabilidade">
+            <div class="pilar">
+              <div class="pilar-ico" aria-hidden="true">
+                <svg viewBox="0 0 40 40" fill="none">
+                  <circle cx="20" cy="20" r="18" stroke="var(--verde-primario)" stroke-width="1.5" opacity=".3"/>
+                  <path d="M20 8C14 14 12 19 20 32C28 19 26 14 20 8Z" fill="var(--verde-primario)"/>
+                </svg>
+              </div>
+              <h3>Ambiental</h3>
+              <p>Preservação dos recursos naturais, biodiversidade e estabilidade climática para as próximas gerações.</p>
+            </div>
+            <div class="pilar">
+              <div class="pilar-ico" aria-hidden="true">
+                <svg viewBox="0 0 40 40" fill="none">
+                  <circle cx="20" cy="20" r="18" stroke="var(--azul-tecnologia)" stroke-width="1.5" opacity=".3"/>
+                  <rect x="10" y="22" width="5" height="10" rx="1" fill="var(--azul-tecnologia)"/>
+                  <rect x="17" y="16" width="5" height="16" rx="1" fill="var(--azul-tecnologia)"/>
+                  <rect x="24" y="10" width="5" height="22" rx="1" fill="var(--azul-tecnologia)"/>
+                </svg>
+              </div>
+              <h3>Econômico</h3>
+              <p>Rentabilidade de longo prazo, eficiência produtiva e inovação tecnológica no campo.</p>
+            </div>
+            <div class="pilar">
+              <div class="pilar-ico" aria-hidden="true">
+                <svg viewBox="0 0 40 40" fill="none">
+                  <circle cx="20" cy="20" r="18" stroke="var(--terra-escuro)" stroke-width="1.5" opacity=".3"/>
+                  <circle cx="20" cy="16" r="5" fill="var(--terra-escuro)" opacity=".7"/>
+                  <path d="M10 32c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="var(--terra-escuro)" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3>Social</h3>
+              <p>Valorização do produtor rural, comunidades locais e segurança alimentar global.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         3. BENEFÍCIOS
+    ════════════════════════════════════════ -->
+    <section id="beneficios" class="section beneficios" aria-labelledby="ben-titulo">
+      <div class="container">
+        <header class="sec-head">
+          <p class="sec-label">Vantagens</p>
+          <h2 id="ben-titulo" class="sec-title">Benefícios das Práticas Sustentáveis</h2>
+          <div class="sec-divider" aria-hidden="true"></div>
+        </header>
+
+        <div class="ben-grid">
+
+          <article class="ben-card" tabindex="0">
+            <div class="ben-card-inner">
+              <div class="ben-ico" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none">
+                  <path d="M24 4C14 14 10 22 24 44C38 22 34 14 24 4Z" fill="var(--azul-tecnologia)" opacity=".15"/>
+                  <path d="M24 10C17 18 15 24 24 40C33 24 31 18 24 10Z" fill="var(--azul-tecnologia)"/>
+                  <path d="M14 30C18 24 22 26 28 22" stroke="var(--azul-claro)" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>
+              </div>
+              <h3>Uso Consciente da Água</h3>
+              <p>Irrigação por gotejamento e sensoriamento remoto reduzem o consumo hídrico em até 50%, preservando nascentes e lençóis freáticos.</p>
+              <div class="ben-metrica" aria-label="Economia de até 85% versus irrigação convencional">
+                <div class="ben-barra" aria-hidden="true"><div class="ben-barra-fill" data-w="85"></div></div>
+                <span class="ben-num">85%</span>
+              </div>
+              <p class="ben-meta-label">economia vs. irrigação convencional</p>
+            </div>
+          </article>
+
+          <article class="ben-card" tabindex="0">
+            <div class="ben-card-inner">
+              <div class="ben-ico" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none">
+                  <ellipse cx="24" cy="36" rx="16" ry="6" fill="var(--verde-primario)" opacity=".15"/>
+                  <path d="M24 8v20M18 20l6 8 6-8" stroke="var(--verde-primario)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M12 36h24" stroke="var(--verde-primario)" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+                </svg>
+              </div>
+              <h3>Conservação do Solo</h3>
+              <p>Plantio direto, rotação de culturas e cobertura vegetal regeneram matéria orgânica, prevenindo erosão e garantindo fertilidade por décadas.</p>
+              <div class="ben-metrica" aria-label="72% menos erosão com plantio direto">
+                <div class="ben-barra" aria-hidden="true"><div class="ben-barra-fill" data-w="72"></div></div>
+                <span class="ben-num">72%</span>
+              </div>
+              <p class="ben-meta-label">menos erosão com plantio direto</p>
+            </div>
+          </article>
+
+          <article class="ben-card" tabindex="0">
+            <div class="ben-card-inner">
+              <div class="ben-ico" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none">
+                  <circle cx="24" cy="24" r="16" stroke="var(--verde-primario)" stroke-width="1.5" opacity=".2"/>
+                  <circle cx="24" cy="24" r="10" fill="var(--verde-primario)" opacity=".15"/>
+                  <path d="M24 14v4M24 30v4M14 24h4M30 24h4" stroke="var(--verde-primario)" stroke-width="2" stroke-linecap="round"/>
+                  <circle cx="24" cy="24" r="4" fill="var(--verde-primario)"/>
+                </svg>
+              </div>
+              <h3>Redução de Impactos</h3>
+              <p>Menor uso de agroquímicos e integração lavoura-pecuária-floresta reduzem emissões de gases de efeito estufa e a pegada ecológica da produção.</p>
+              <div class="ben-metrica" aria-label="Redução de 60% nas emissões de GEE">
+                <div class="ben-barra" aria-hidden="true"><div class="ben-barra-fill" data-w="60"></div></div>
+                <span class="ben-num">60%</span>
+              </div>
+              <p class="ben-meta-label">redução nas emissões de GEE</p>
+            </div>
+          </article>
+
+          <article class="ben-card" tabindex="0">
+            <div class="ben-card-inner">
+              <div class="ben-ico" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none">
+                  <polyline points="8,36 18,24 26,30 38,12" stroke="var(--azul-tecnologia)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                  <circle cx="18" cy="24" r="3" fill="var(--azul-tecnologia)"/>
+                  <circle cx="26" cy="30" r="3" fill="var(--azul-tecnologia)"/>
+                  <circle cx="38" cy="12" r="3" fill="var(--azul-tecnologia)"/>
+                </svg>
+              </div>
+              <h3>Produtividade Sustentável</h3>
+              <p>Produtores que adotam práticas sustentáveis reportam aumento médio de 30% na produtividade em cinco anos, com maior resiliência climática.</p>
+              <div class="ben-metrica" aria-label="92% de satisfação entre produtores">
+                <div class="ben-barra" aria-hidden="true"><div class="ben-barra-fill" data-w="92"></div></div>
+                <span class="ben-num">92%</span>
+              </div>
+              <p class="ben-meta-label">de satisfação entre produtores adotantes</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         4. TECNOLOGIAS
+    ════════════════════════════════════════ -->
+    <section id="tecnologias" class="section tec-section" aria-labelledby="tec-titulo">
+      <div class="container">
+        <header class="sec-head sec-head-inv">
+          <p class="sec-label sec-label-inv">Inovação</p>
+          <h2 id="tec-titulo" class="sec-title sec-title-inv">Tecnologias Sustentáveis no Campo</h2>
+          <div class="sec-divider sec-divider-inv" aria-hidden="true"></div>
+          <p class="sec-desc-inv">A convergência entre tecnologia de ponta e práticas sustentáveis está redefinindo o agronegócio brasileiro.</p>
+        </header>
+
+        <div class="tec-grid">
+
+          <article class="tec-card" tabindex="0" aria-label="Agricultura de Precisão — pressione Enter para detalhes">
+            <div class="tec-front">
+              <div class="tec-ico" aria-hidden="true">
+                <svg viewBox="0 0 56 56" fill="none">
+                  <circle cx="28" cy="28" r="20" stroke="currentColor" stroke-width="1.5" opacity=".3"/>
+                  <circle cx="28" cy="28" r="12" stroke="currentColor" stroke-width="1.5" opacity=".5"/>
+                  <circle cx="28" cy="28" r="4"  fill="currentColor"/>
+                  <path d="M28 8v6M28 42v6M8 28h6M42 28h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3>Agricultura de Precisão</h3>
+              <p class="tec-categoria">Gestão de Insumos</p>
+            </div>
+            <div class="tec-back" aria-hidden="true">
+              <h3>Agricultura de Precisão</h3>
+              <p>Utiliza GPS, sensores e mapas georreferenciados para aplicar insumos apenas onde e quando necessário, reduzindo desperdício em até 40% e aumentando a rentabilidade por hectare.</p>
+              <span class="tec-tag">Eficiência</span>
+            </div>
+          </article>
+
+          <article class="tec-card" tabindex="0" aria-label="Sensores e Drones — pressione Enter para detalhes">
+            <div class="tec-front">
+              <div class="tec-ico" aria-hidden="true">
+                <svg viewBox="0 0 56 56" fill="none">
+                  <path d="M28 36V20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M16 28H8M48 28H40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <circle cx="28" cy="28" r="4" fill="currentColor"/>
+                  <path d="M16 20l-4-4M40 20l4-4M16 36l-4 4M40 36l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".6"/>
+                </svg>
+              </div>
+              <h3>Sensores e Drones</h3>
+              <p class="tec-categoria">Monitoramento Remoto</p>
+            </div>
+            <div class="tec-back" aria-hidden="true">
+              <h3>Sensores e Drones</h3>
+              <p>Monitoramento aéreo e sensores IoT no solo permitem diagnóstico em tempo real sobre saúde das plantas, umidade e pragas, reduzindo inspeções manuais em até 70%.</p>
+              <span class="tec-tag">Monitoramento</span>
+            </div>
+          </article>
+
+          <article class="tec-card" tabindex="0" aria-label="Inteligência Artificial — pressione Enter para detalhes">
+            <div class="tec-front">
+              <div class="tec-ico" aria-hidden="true">
+                <svg viewBox="0 0 56 56" fill="none">
+                  <rect x="16" y="16" width="24" height="24" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                  <circle cx="22" cy="22" r="2" fill="currentColor"/>
+                  <circle cx="34" cy="22" r="2" fill="currentColor"/>
+                  <circle cx="22" cy="34" r="2" fill="currentColor"/>
+                  <circle cx="34" cy="34" r="2" fill="currentColor"/>
+                  <circle cx="28" cy="28" r="3" fill="currentColor" opacity=".5"/>
+                  <path d="M22 22l6 6M34 22l-6 6" stroke="currentColor" stroke-width="1" opacity=".4"/>
+                </svg>
+              </div>
+              <h3>Inteligência Artificial</h3>
+              <p class="tec-categoria">Análise Preditiva</p>
+            </div>
+            <div class="tec-back" aria-hidden="true">
+              <h3>Inteligência Artificial</h3>
+              <p>Algoritmos de machine learning preveem colheitas, detectam doenças precocemente e otimizam toda a cadeia logística, reduzindo perdas pós-colheita em até 35%.</p>
+              <span class="tec-tag">Predição</span>
+            </div>
+          </article>
+
+          <article class="tec-card" tabindex="0" aria-label="Energia Renovável — pressione Enter para detalhes">
+            <div class="tec-front">
+              <div class="tec-ico" aria-hidden="true">
+                <svg viewBox="0 0 56 56" fill="none">
+                  <circle cx="28" cy="22" r="8" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M28 14V8M28 36v-6M16 22H10M46 22H40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M19 15l-4-4M41 15l4-4M19 29l-4 4M41 29l4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".5"/>
+                  <path d="M20 40h16M24 40v6M32 40v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+                </svg>
+              </div>
+              <h3>Energia Renovável</h3>
+              <p class="tec-categoria">Fontes Limpas</p>
+            </div>
+            <div class="tec-back" aria-hidden="true">
+              <h3>Energia Renovável</h3>
+              <p>Painéis solares, biogás e mini-hidrelétricas tornam propriedades rurais autossuficientes em energia, reduzindo custos operacionais em até 60% e zerando emissões de carbono.</p>
+              <span class="tec-tag">Energia Limpa</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         5. CURIOSIDADES / DADOS
+    ════════════════════════════════════════ -->
+    <section id="dados" class="section dados-section" aria-labelledby="dados-titulo">
+      <div class="container">
+        <header class="sec-head">
+          <p class="sec-label">Estatísticas</p>
+          <h2 id="dados-titulo" class="sec-title">Dados que Fundamentam a Urgência</h2>
+          <div class="sec-divider" aria-hidden="true"></div>
+        </header>
+
+        <div class="dados-grid">
+
+          <div class="dado-card" role="figure" aria-label="70% da água doce mundial é usada na agricultura">
+            <div class="dado-num" data-target="70" data-suffix="%">
+              <span class="dado-val">0</span><span class="dado-suf">%</span>
+            </div>
+            <p class="dado-titulo">da água doce mundial usada na agricultura</p>
+            <p class="dado-desc">Técnicas sustentáveis podem reduzir esse consumo pela metade até 2050.</p>
+            <div class="dado-fonte">Fonte: FAO, 2022</div>
+          </div>
+
+          <div class="dado-card dado-destaque" role="figure" aria-label="500 bilhões de dólares perdidos por degradação do solo">
+            <div class="dado-num" data-target="500" data-suffix="bi">
+              <span class="dado-val">0</span><span class="dado-suf"> bi$</span>
+            </div>
+            <p class="dado-titulo">perdidos anualmente com degradação do solo</p>
+            <p class="dado-desc">Prejuízo econômico global estimado pela Organização das Nações Unidas para Alimentação.</p>
+            <div class="dado-fonte">Fonte: FAO/ONU, 2022</div>
+          </div>
+
+          <div class="dado-card" role="figure" aria-label="33% das emissões globais de GEE vêm do sistema alimentar">
+            <div class="dado-num" data-target="33" data-suffix="%">
+              <span class="dado-val">0</span><span class="dado-suf">%</span>
+            </div>
+            <p class="dado-titulo">das emissões globais de GEE do sistema alimentar</p>
+            <p class="dado-desc">Produção, transporte e desperdício alimentar combinados.</p>
+            <div class="dado-fonte">Fonte: IPCC, 2022</div>
+          </div>
+
+          <div class="dado-card" role="figure" aria-label="10 bilhões de pessoas no planeta até 2050">
+            <div class="dado-num" data-target="10" data-suffix="bi">
+              <span class="dado-val">0</span><span class="dado-suf"> bi</span>
+            </div>
+            <p class="dado-titulo">de pessoas no planeta até 2050</p>
+            <p class="dado-desc">Exigirão 70% mais alimentos com os mesmos — ou menos — recursos naturais disponíveis.</p>
+            <div class="dado-fonte">Fonte: ONU, 2023</div>
+          </div>
+
+          <div class="dado-card dado-destaque" role="figure" aria-label="40% das terras agrícolas estão degradadas">
+            <div class="dado-num" data-target="40" data-suffix="%">
+              <span class="dado-val">0</span><span class="dado-suf">%</span>
+            </div>
+            <p class="dado-titulo">das terras agrícolas mundiais degradadas</p>
+            <p class="dado-desc">Restauração dessas áreas pode sequestrar 1,5 Gt de CO₂ por ano.</p>
+            <div class="dado-fonte">Fonte: WRI, 2023</div>
+          </div>
+
+          <div class="dado-card" role="figure" aria-label="Mais de 400 espécies em 1 hectare de floresta tropical">
+            <div class="dado-num" data-target="400" data-suffix="+">
+              <span class="dado-val">0</span><span class="dado-suf">+</span>
+            </div>
+            <p class="dado-titulo">espécies por hectare de floresta tropical</p>
+            <p class="dado-desc">A Amazônia abriga 10% de toda a biodiversidade terrestre do planeta.</p>
+            <div class="dado-fonte">Fonte: EMBRAPA, 2023</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         6. LINHA DO TEMPO
+    ════════════════════════════════════════ -->
+    <section id="timeline" class="section tl-section" aria-labelledby="tl-titulo">
+      <div class="container">
+        <header class="sec-head sec-head-inv">
+          <p class="sec-label sec-label-inv">Evolução Histórica</p>
+          <h2 id="tl-titulo" class="sec-title sec-title-inv">A Jornada da Agricultura Sustentável</h2>
+          <div class="sec-divider sec-divider-inv" aria-hidden="true"></div>
+        </header>
+
+        <ol class="timeline" aria-label="Linha do tempo da agricultura sustentável">
+
+          <li class="tl-item">
+            <div class="tl-marcador" aria-hidden="true">
+              <span class="tl-ano-mob">1970</span>
+            </div>
+            <div class="tl-conteudo">
+              <time class="tl-ano" datetime="1970">1970</time>
+              <h3>Despertar Ambiental</h3>
+              <p>Publicação de <em>Os Limites do Crescimento</em> pelo Clube de Roma alerta o mundo sobre os riscos do consumo ilimitado de recursos. Nasce o movimento ambientalista moderno.</p>
+            </div>
+          </li>
+
+          <li class="tl-item">
+            <div class="tl-marcador" aria-hidden="true">
+              <span class="tl-ano-mob">1987</span>
+            </div>
+            <div class="tl-conteudo">
+              <time class="tl-ano" datetime="1987">1987</time>
+              <h3>Relatório Brundtland</h3>
+              <p>A ONU define oficialmente "desenvolvimento sustentável" como aquele que atende às necessidades do presente sem comprometer as gerações futuras. Marco histórico para políticas globais.</p>
+            </div>
+          </li>
+
+          <li class="tl-item">
+            <div class="tl-marcador" aria-hidden="true">
+              <span class="tl-ano-mob">1992</span>
+            </div>
+            <div class="tl-conteudo">
+              <time class="tl-ano" datetime="1992">1992</time>
+              <h3>Rio 92 — Agenda 21</h3>
+              <p>O Brasil sedia a Cúpula da Terra. A Agenda 21 estabelece metas para o desenvolvimento sustentável, incluindo agricultura de baixo impacto e preservação de biomas.</p>
+            </div>
+          </li>
+
+          <li class="tl-item">
+            <div class="tl-marcador" aria-hidden="true">
+              <span class="tl-ano-mob">2000s</span>
+            </div>
+            <div class="tl-conteudo">
+              <time class="tl-ano" datetime="2000">Anos 2000</time>
+              <h3>Revolução da Precisão</h3>
+              <p>GPS, sensores e softwares de gestão chegam ao campo. A agricultura de precisão começa a transformar o manejo de lavouras, reduzindo insumos e aumentando eficiência.</p>
+            </div>
+          </li>
+
+          <li class="tl-item">
+            <div class="tl-marcador" aria-hidden="true">
+              <span class="tl-ano-mob">2015</span>
+            </div>
+            <div class="tl-conteudo">
+              <time class="tl-ano" datetime="2015">2015</time>
+              <h3>ODS e Acordo de Paris</h3>
+              <p>Os 17 Objetivos de Desenvolvimento Sustentável da ONU e o Acordo de Paris posicionam o sistema alimentar no centro do combate às mudanças climáticas globais.</p>
+            </div>
+          </li>
+
+          <li class="tl-item tl-futuro">
+            <div class="tl-marcador tl-marcador-fut" aria-hidden="true">
+              <span class="tl-ano-mob">Futuro</span>
+            </div>
+            <div class="tl-conteudo tl-conteudo-fut">
+              <time class="tl-ano tl-ano-fut">Futuro</time>
+              <h3>Agricultura Regenerativa</h3>
+              <p>IA, bioeconomia e práticas regenerativas convergem para um sistema que não apenas preserva, mas <strong>restaura ecossistemas</strong> — e alimenta com responsabilidade os 10 bilhões de habitantes do planeta.</p>
+            </div>
+          </li>
+
+        </ol>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         7. COMPARAÇÃO
+    ════════════════════════════════════════ -->
+    <section id="comparacao" class="section comp-section" aria-labelledby="comp-titulo">
+      <div class="container">
+        <header class="sec-head">
+          <p class="sec-label">Análise Comparativa</p>
+          <h2 id="comp-titulo" class="sec-title">Sustentável × Convencional</h2>
+          <div class="sec-divider" aria-hidden="true"></div>
+        </header>
+
+        <div class="comp-wrap">
+          <div class="comp-cabecalho" aria-hidden="true">
+            <span class="comp-col-sus">Prática Sustentável</span>
+            <span class="comp-col-mid">Dimensão</span>
+            <span class="comp-col-conv">Prática Convencional</span>
+          </div>
+
+          <div class="comp-tabela" role="table" aria-label="Comparação entre práticas agrícolas sustentáveis e convencionais">
+
+            <div class="comp-linha" role="row">
+              <div class="comp-sus" role="cell">Irrigação por gotejamento com monitoramento de umidade em tempo real</div>
+              <div class="comp-mid" role="cell">
+                <span class="comp-dim-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8 8 6 12 12 22C18 12 16 8 12 2Z" fill="currentColor"/></svg>
+                </span>
+                Água
+              </div>
+              <div class="comp-conv" role="cell">Aspersão convencional sem controle de quantidade ou frequência</div>
+            </div>
+
+            <div class="comp-linha" role="row">
+              <div class="comp-sus" role="cell">Plantio direto sobre palha e rotação de culturas planejada</div>
+              <div class="comp-mid" role="cell">
+                <span class="comp-dim-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M12 4v12M8 12l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="18" width="16" height="3" rx="1" fill="currentColor" opacity=".5"/></svg>
+                </span>
+                Solo
+              </div>
+              <div class="comp-conv" role="cell">Arado intensivo e monocultura contínua sem reposição orgânica</div>
+            </div>
+
+            <div class="comp-linha" role="row">
+              <div class="comp-sus" role="cell">Controle biológico integrado e uso racional de defensivos naturais</div>
+              <div class="comp-mid" role="cell">
+                <span class="comp-dim-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </span>
+                Pragas
+              </div>
+              <div class="comp-conv" role="cell">Uso indiscriminado de agrotóxicos em calendário fixo preventivo</div>
+            </div>
+
+            <div class="comp-linha" role="row">
+              <div class="comp-sus" role="cell">Painéis solares, biogás e aproveitamento de resíduos agroindustriais</div>
+              <div class="comp-mid" role="cell">
+                <span class="comp-dim-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="10" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M12 15v5M8 20h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </span>
+                Energia
+              </div>
+              <div class="comp-conv" role="cell">Dependência de combustíveis fósseis e rede elétrica convencional</div>
+            </div>
+
+            <div class="comp-linha" role="row">
+              <div class="comp-sus" role="cell">Compostagem, reaproveitamento e destinação responsável de embalagens</div>
+              <div class="comp-mid" role="cell">
+                <span class="comp-dim-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><polyline points="1,4 1,10 7,10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 15a9 9 0 1 0 .5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </span>
+                Resíduos
+              </div>
+              <div class="comp-conv" role="cell">Queima de palha e descarte inadequado de embalagens no campo</div>
+            </div>
+
+            <div class="comp-linha" role="row">
+              <div class="comp-sus" role="cell">Reservas legais preservadas, APPs restauradas e corredores ecológicos</div>
+              <div class="comp-mid" role="cell">
+                <span class="comp-dim-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C8 7 6 11 12 21C18 11 16 7 12 3Z" fill="currentColor" opacity=".3"/><path d="M12 6C9 9 8 12 12 19C16 12 15 9 12 6Z" fill="currentColor"/></svg>
+                </span>
+                Floresta
+              </div>
+              <div class="comp-conv" role="cell">Desmatamento para expansão de área sem replantio compensatório</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         8. QUIZ INTERATIVO
+    ════════════════════════════════════════ -->
+    <section id="quiz" class="section quiz-section" aria-labelledby="quiz-titulo">
+      <div class="container">
+        <header class="sec-head sec-head-inv">
+          <p class="sec-label sec-label-inv">Avaliação</p>
+          <h2 id="quiz-titulo" class="sec-title sec-title-inv">Quiz: Agronegócio Sustentável</h2>
+          <div class="sec-divider sec-divider-inv" aria-hidden="true"></div>
+        </header>
+
+        <div class="quiz-shell">
+          <div class="quiz-barra-wrap">
+            <div class="quiz-barra" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do quiz">
+              <div class="quiz-barra-fill" id="quiz-pfill"></div>
+            </div>
+            <span class="quiz-barra-texto" id="quiz-ptext" aria-live="polite">Pergunta 1 de 6</span>
+          </div>
+
+          <div id="quiz-stage" aria-live="polite" aria-atomic="true"></div>
+          <div id="quiz-result" class="quiz-result" aria-live="assertive" aria-atomic="true" hidden></div>
+
+          <div class="quiz-restart-wrap">
+            <button class="btn btn-outline btn-restart" id="quiz-restart" hidden aria-label="Reiniciar o quiz">
+              Reiniciar Quiz
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         9. CONTADOR DE IMPACTO
+    ════════════════════════════════════════ -->
+    <section id="impacto" class="section impacto-section" aria-labelledby="imp-titulo">
+      <div class="container">
+        <header class="sec-head">
+          <p class="sec-label">Impacto em Tempo Real</p>
+          <h2 id="imp-titulo" class="sec-title">Impacto Coletivo das Práticas Sustentáveis</h2>
+          <div class="sec-divider" aria-hidden="true"></div>
+          <p class="sec-desc">A cada segundo, práticas sustentáveis em todo o mundo geram resultados mensuráveis. Os contadores abaixo simulam esse impacto acumulado desde que você abriu esta página.</p>
+        </header>
+
+        <div class="imp-grid">
+
+          <div class="imp-card">
+            <div class="imp-ico" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none">
+                <path d="M24 4C16 14 12 22 24 44C36 22 32 14 24 4Z" fill="var(--azul-tecnologia)" opacity=".15"/>
+                <path d="M24 10C18 18 16 24 24 40C32 24 30 18 24 10Z" fill="var(--azul-tecnologia)"/>
+              </svg>
+            </div>
+            <div class="imp-val" id="cnt-water" aria-live="polite" aria-label="Litros de água economizados">0</div>
+            <p class="imp-label">Litros de água economizados</p>
+            <p class="imp-sub">por irrigação eficiente global</p>
+          </div>
+
+          <div class="imp-card imp-card-destaque">
+            <div class="imp-ico" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none">
+                <circle cx="24" cy="24" r="18" stroke="#fff" stroke-width="1" opacity=".3"/>
+                <path d="M24 12C18 18 16 23 24 36C32 23 30 18 24 12Z" fill="#fff"/>
+                <path d="M14 30C18 24 22 26 28 22" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round" fill="none"/>
+              </svg>
+            </div>
+            <div class="imp-val" id="cnt-co2" aria-live="polite" aria-label="Kg de CO₂ evitados">0</div>
+            <p class="imp-label">Kg de CO₂ evitados</p>
+            <p class="imp-sub">pela agricultura de baixo carbono</p>
+          </div>
+
+          <div class="imp-card">
+            <div class="imp-ico" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none">
+                <ellipse cx="24" cy="38" rx="14" ry="5" fill="var(--verde-primario)" opacity=".15"/>
+                <path d="M24 10v22M18 22l6 8 6-8" stroke="var(--verde-primario)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="imp-val" id="cnt-soil" aria-live="polite" aria-label="Hectares de solo restaurado">0</div>
+            <p class="imp-label">Hectares de solo restaurado</p>
+            <p class="imp-sub">com práticas regenerativas</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════════════════════════════════════════
+       RODAPÉ / CONCLUSÃO
+  ════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+
+      <div class="footer-conclusao">
+        <h2>O Campo do Futuro</h2>
+        <p>O agronegócio brasileiro tem capacidade única de liderar a transição para um modelo produtivo que alia eficiência, inovação e responsabilidade ambiental. Produzir mais com menos impacto não é utopia — é o único caminho viável para garantir segurança alimentar, estabilidade climática e prosperidade econômica para as próximas gerações.</p>
+        <p><strong>O futuro do campo sustentável começa nas decisões de hoje.</strong></p>
+      </div>
+
+      <div class="footer-grade">
+
+        <div class="footer-marca">
+          <a href="#hero" class="footer-logo" aria-label="AgroForte — voltar ao topo">
+            <svg width="36" height="36" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+              <rect width="32" height="32" rx="6" fill="var(--verde-claro)" opacity=".2"/>
+              <path d="M16 4C10 10 8 15 16 28C24 15 22 10 16 4Z" fill="var(--verde-claro)"/>
+            </svg>
+            <span>AgroForte</span>
+          </a>
+          <p>Equilíbrio entre produção e meio ambiente.</p>
+          <p class="footer-credito">Projeto educacional para feiras de ciências e concursos acadêmicos.</p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Navegação rápida no rodapé">
+          <h3>Seções</h3>
+          <ul role="list">
+            <li><a href="#sobre"       class="flink">O Conceito</a></li>
+            <li><a href="#beneficios"  class="flink">Benefícios</a></li>
+            <li><a href="#tecnologias" class="flink">Tecnologias</a></li>
+            <li><a href="#dados"       class="flink">Dados</a></li>
+            <li><a href="#timeline"    class="flink">Histórico</a></li>
+            <li><a href="#comparacao"  class="flink">Comparação</a></li>
+            <li><a href="#quiz"        class="flink">Quiz</a></li>
+            <li><a href="#impacto"     class="flink">Impacto</a></li>
+          </ul>
+        </nav>
+
+        <div class="footer-info">
+          <h3>Referências</h3>
+          <ul role="list">
+            <li class="flink-info">FAO — Food and Agriculture Organization</li>
+            <li class="flink-info">EMBRAPA — Empresa Brasileira de Pesquisa Agropecuária</li>
+            <li class="flink-info">IPCC — Painel Intergovernamental sobre Mudanças Climáticas</li>
+            <li class="flink-info">World Resources Institute (WRI)</li>
+            <li class="flink-info">Ministério do Meio Ambiente do Brasil</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-rodape">
+        <p>&copy; 2025 AgroForte &mdash; Conteúdo educacional de domínio público</p>
+        <a href="#hero" class="footer-topo">Voltar ao topo &uarr;</a>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="java"></script>
+</body>
+</html>

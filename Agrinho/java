@@ -1,0 +1,523 @@
+at > /mnt/user-data/outputs/agroforte/script.js << 'JS_EOF'
+/**
+ * AGRO FORTE — script.js
+ * Vanilla JS modular · sem dependências externas
+ * ──────────────────────────────────────────────
+ * Módulos:
+ *   initFont        → controle de tamanho de fonte (A+/A/A-)
+ *   initTheme       → modos claro / escuro / alto contraste
+ *   initSpeech      → leitura em voz alta (Speech Synthesis API)
+ *   initNav         → header, menu mobile, link ativo ao rolar
+ *   initReveal      → animações de entrada por scroll
+ *   initBenBars     → barras animadas dos benefícios
+ *   initDadoCounters→ contadores animados das estatísticas
+ *   initTimeline    → animação progressiva da linha do tempo
+ *   initTechCards   → flip dos cards de tecnologia (teclado)
+ *   initQuiz        → quiz interativo completo
+ *   initImpact      → contadores de impacto em tempo real
+ */
+
+/* ════════════════════════════════════════════════════
+   DADOS DO QUIZ
+════════════════════════════════════════════════════ */
+const QUIZ = [
+  {
+    q: "Qual prática agrícola reduz a erosão do solo e preserva sua umidade natural?",
+    opts: [
+      "Arado intensivo antes de cada plantio",
+      "Plantio direto sobre cobertura vegetal",
+      "Remoção completa de toda a vegetação nativa",
+      "Aplicação excessiva de calcário"
+    ],
+    ok: 1,
+    fb: {
+      sim: "Correto! O plantio direto mantém a cobertura vegetal no solo, reduzindo a erosão em até 72% e preservando a umidade para as raízes.",
+      nao: "Incorreto. O plantio direto é a resposta correta — mantém palha e resíduos vegetais que protegem o solo da erosão e do ressecamento."
+    }
+  },
+  {
+    q: "Qual sistema de irrigação é mais eficiente na economia de água?",
+    opts: [
+      "Aspersão convencional de área total",
+      "Inundação por sulcos entre fileiras",
+      "Gotejamento localizado com sensores de umidade",
+      "Pivô central sem controle automatizado"
+    ],
+    ok: 2,
+    fb: {
+      sim: "Correto! O gotejamento com sensores entrega água diretamente na zona radicular, economizando até 85% em comparação à aspersão convencional.",
+      nao: "Incorreto. O gotejamento com sensores é a alternativa correta — aplica precisamente a quantidade necessária, direto na raiz da planta."
+    }
+  },
+  {
+    q: "Qual porcentagem da água doce mundial é consumida pela agricultura?",
+    opts: ["30%", "50%", "70%", "90%"],
+    ok: 2,
+    fb: {
+      sim: "Correto! Aproximadamente 70% de toda a água doce consumida no mundo é destinada à irrigação e às atividades agropecuárias.",
+      nao: "Incorreto. A resposta correta é 70%. A agricultura é, de longe, a maior consumidora de água doce do planeta."
+    }
+  },
+  {
+    q: "O que é o sistema de Integração Lavoura-Pecuária-Floresta (iLPF)?",
+    opts: [
+      "Técnica de desmatamento estratégico para ampliar pastagens",
+      "Sistema que combina cultivos agrícolas, criação animal e árvores numa mesma área",
+      "Método de irrigação por inundação periódica",
+      "Processo de adubação química de alta intensidade"
+    ],
+    ok: 1,
+    fb: {
+      sim: "Correto! O iLPF integra lavouras, pecuária e componente florestal na mesma propriedade, diversificando renda e restaurando o equilíbrio ecossistêmico.",
+      nao: "Incorreto. O iLPF é um sistema que combina grãos, pastagens e árvores na mesma área, gerando benefícios econômicos e ambientais simultâneos."
+    }
+  },
+  {
+    q: "Qual tecnologia utiliza GPS e imagens de satélite para otimizar a aplicação de insumos agrícolas?",
+    opts: [
+      "Biotecnologia molecular de sementes",
+      "Agricultura de Precisão",
+      "Sistema de aquaponia integrada",
+      "Hidroponia em ambiente controlado"
+    ],
+    ok: 1,
+    fb: {
+      sim: "Correto! A Agricultura de Precisão usa GPS, sensoriamento remoto e mapas georreferenciados para aplicar insumos exatamente onde e quando necessário.",
+      nao: "Incorreto. A Agricultura de Precisão mapeia variações do solo e da lavoura para reduzir o desperdício de insumos em até 40%."
+    }
+  },
+  {
+    q: "O maior programa nacional de agricultura de baixo carbono do mundo é o:",
+    opts: [
+      "Green New Deal Agrícola (União Europeia)",
+      "Carbon Farm Initiative (Estados Unidos)",
+      "Programa ABC+ — Agricultura de Baixo Carbono (Brasil)",
+      "Climate-Smart Agriculture (Banco Mundial)"
+    ],
+    ok: 2,
+    fb: {
+      sim: "Correto! O Programa ABC+ do Brasil é o maior do mundo em volume de financiamento para práticas agrícolas de baixo carbono e adaptação climática.",
+      nao: "Incorreto. O Brasil lidera globalmente com o Programa ABC+ (Agricultura de Baixo Carbono), maior programa mundial na área."
+    }
+  }
+];
+
+/* ════════════════════════════════════════════════════
+   ESTADO GLOBAL
+════════════════════════════════════════════════════ */
+const S = {
+  fontScale:     1,
+  theme:         'light',
+  quizIdx:       0,
+  quizScore:     0,
+  quizAnswered:  false,
+  impactStarted: false,
+  impactTimer:   null,
+};
+
+/* ════════════════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════════════════ */
+const qs   = (sel, root = document) => root.querySelector(sel);
+const qsa  = (sel, root = document) => [...root.querySelectorAll(sel)];
+const bind = (id, fn) => qs('#' + id)?.addEventListener('click', fn);
+
+/** Cria um IntersectionObserver e passa entry + entry.observer ao callback */
+function observe(els, opts, cb) {
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => { e.observer = io; cb(e); }),
+    opts
+  );
+  els.forEach(el => el && io.observe(el));
+}
+
+/* ════════════════════════════════════════════════════
+   FONTE — A+ / A / A-
+════════════════════════════════════════════════════ */
+function initFont() {
+  const root = document.documentElement;
+
+  function aplicar(v) {
+    S.fontScale = Math.max(.8, Math.min(1.45, v));
+    root.style.fontSize = S.fontScale + 'rem';
+    localStorage.setItem('fontScale', S.fontScale);
+  }
+
+  const salvo = parseFloat(localStorage.getItem('fontScale'));
+  if (salvo) aplicar(salvo);
+
+  bind('btn-font-up',    () => aplicar(S.fontScale + .1));
+  bind('btn-font-reset', () => aplicar(1));
+  bind('btn-font-down',  () => aplicar(S.fontScale - .1));
+}
+
+/* ════════════════════════════════════════════════════
+   TEMAS — claro / escuro / alto contraste
+════════════════════════════════════════════════════ */
+function initTheme() {
+  function aplicar(tema) {
+    document.body.classList.remove('dark-mode', 'high-contrast');
+    if (tema === 'dark')     document.body.classList.add('dark-mode');
+    if (tema === 'contrast') document.body.classList.add('high-contrast');
+    S.theme = tema;
+    localStorage.setItem('theme', tema);
+  }
+
+  aplicar(localStorage.getItem('theme') || 'light');
+  bind('btn-theme-light',    () => aplicar('light'));
+  bind('btn-theme-dark',     () => aplicar('dark'));
+  bind('btn-theme-contrast', () => aplicar('contrast'));
+}
+
+/* ════════════════════════════════════════════════════
+   SPEECH SYNTHESIS — leitura em voz alta
+════════════════════════════════════════════════════ */
+function initSpeech() {
+  if (!window.speechSynthesis) return;
+  const synth = window.speechSynthesis;
+
+  /** Retorna a seção mais próxima do centro da janela */
+  function secaoVisivel() {
+    const meio = window.innerHeight / 2;
+    return qsa('section[id]').reduce((melhor, el) => {
+      const d = Math.abs(el.getBoundingClientRect().top + el.offsetHeight / 2 - meio);
+      return d < melhor.d ? { el, d } : melhor;
+    }, { el: null, d: Infinity }).el;
+  }
+
+  bind('btn-speech-play', () => {
+    synth.cancel();
+    const sec = secaoVisivel();
+    if (!sec) return;
+    const u = new SpeechSynthesisUtterance(sec.innerText.slice(0, 1800));
+    u.lang = 'pt-BR'; u.rate = .88; u.pitch = 1;
+    synth.speak(u);
+  });
+
+  bind('btn-speech-pause', () =>
+    synth.paused ? synth.resume() : synth.pause()
+  );
+}
+
+/* ════════════════════════════════════════════════════
+   NAVEGAÇÃO — header, menu mobile, link ativo
+════════════════════════════════════════════════════ */
+function initNav() {
+  const header = qs('.site-header');
+  const toggle = qs('#nav-toggle');
+  const menu   = qs('#nav-menu');
+  const links  = qsa('.nav-link');
+
+  /* sombra ao rolar */
+  window.addEventListener('scroll', () =>
+    header.classList.toggle('scrolled', window.scrollY > 20),
+    { passive: true }
+  );
+
+  /* menu mobile */
+  toggle.addEventListener('click', () => {
+    const aberto = menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', aberto);
+  });
+
+  links.forEach(l => l.addEventListener('click', () => {
+    menu.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && menu.classList.contains('open')) {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.focus();
+    }
+  });
+
+  /* link ativo por seção */
+  observe(qsa('section[id]'), { rootMargin: '-38% 0px -50% 0px' }, entry => {
+    if (entry.isIntersecting)
+      links.forEach(l =>
+        l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id)
+      );
+  });
+}
+
+/* ════════════════════════════════════════════════════
+   REVEAL — animações de entrada ao rolar
+════════════════════════════════════════════════════ */
+function initReveal() {
+  const alvos = qsa([
+    '.ben-card', '.dado-card', '.tec-card', '.imp-card',
+    '.comp-linha', '.sobre-layout', '.pilar',
+    '.sec-head', '.footer-conclusao'
+  ].join(','));
+
+  alvos.forEach((el, i) => {
+    el.classList.add('reveal');
+    el.style.transitionDelay = (i % 4) * .07 + 's';
+  });
+
+  observe(qsa('.reveal'), { threshold: .08 }, entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('vis');
+      entry.observer.unobserve(entry.target);
+    }
+  });
+}
+
+/* ════════════════════════════════════════════════════
+   BARRAS DOS BENEFÍCIOS
+════════════════════════════════════════════════════ */
+function initBenBars() {
+  observe(qsa('.ben-barra-fill'), { threshold: .5 }, entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.width = entry.target.dataset.w + '%';
+      entry.observer.unobserve(entry.target);
+    }
+  });
+}
+
+/* ════════════════════════════════════════════════════
+   CONTADORES ANIMADOS — seção Dados
+════════════════════════════════════════════════════ */
+function initDadoCounters() {
+  observe(qsa('.dado-card'), { threshold: .35 }, entry => {
+    if (!entry.isIntersecting) return;
+    const numEl = entry.target.querySelector('.dado-val');
+    const max   = +entry.target.querySelector('.dado-num').dataset.target;
+    if (numEl && max) animarContador(numEl, max, 1800);
+    entry.observer.unobserve(entry.target);
+  });
+}
+
+/** Anima um contador de 0 até `target` em `ms` milissegundos com easing cúbico */
+function animarContador(el, target, ms) {
+  const inicio = performance.now();
+  const tick = agora => {
+    const p = Math.min((agora - inicio) / ms, 1);
+    const v = Math.round((1 - Math.pow(1 - p, 3)) * target);
+    el.textContent = v.toLocaleString('pt-BR');
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+/* ════════════════════════════════════════════════════
+   TIMELINE — animação progressiva
+════════════════════════════════════════════════════ */
+function initTimeline() {
+  observe(qsa('.tl-item'), { threshold: .2 }, entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('vis');
+      entry.observer.unobserve(entry.target);
+    }
+  });
+}
+
+/* ════════════════════════════════════════════════════
+   CARDS TECNOLOGIA — flip via hover e teclado
+════════════════════════════════════════════════════ */
+function initTechCards() {
+  qsa('.tec-card').forEach(card => {
+    const front = card.querySelector('.tec-front');
+    const back  = card.querySelector('.tec-back');
+
+    /* Enter / Space: alterna flip */
+    card.addEventListener('keydown', e => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      const flip = card.classList.toggle('flipped');
+      back.setAttribute('aria-hidden',  String(!flip));
+      front.setAttribute('aria-hidden', String(flip));
+    });
+
+    /* Focus: exibe back para leitores de tela */
+    card.addEventListener('focus', () => {
+      card.classList.add('flipped');
+      back.removeAttribute('aria-hidden');
+      front.setAttribute('aria-hidden', 'true');
+    });
+    card.addEventListener('blur', () => {
+      card.classList.remove('flipped');
+      back.setAttribute('aria-hidden', 'true');
+      front.removeAttribute('aria-hidden');
+    });
+  });
+}
+
+/* ════════════════════════════════════════════════════
+   QUIZ INTERATIVO
+════════════════════════════════════════════════════ */
+function initQuiz() {
+  const stage   = qs('#quiz-stage');
+  const result  = qs('#quiz-result');
+  const restart = qs('#quiz-restart');
+  const pfill   = qs('#quiz-pfill');
+  const ptext   = qs('#quiz-ptext');
+
+  /* Atualiza barra de progresso */
+  function progresso() {
+    const pct = Math.round(S.quizIdx / QUIZ.length * 100);
+    pfill.style.width = pct + '%';
+    pfill.parentElement.setAttribute('aria-valuenow', pct);
+    ptext.textContent = `Pergunta ${Math.min(S.quizIdx + 1, QUIZ.length)} de ${QUIZ.length}`;
+  }
+
+  /* Renderiza a pergunta atual */
+  function renderizar() {
+    S.quizAnswered = false;
+    const { q, opts } = QUIZ[S.quizIdx];
+    progresso();
+
+    stage.innerHTML = `
+      <div class="quiz-card">
+        <span class="quiz-qnum">Pergunta ${S.quizIdx + 1} de ${QUIZ.length}</span>
+        <p class="quiz-q">${q}</p>
+        <div class="quiz-opts" role="group" aria-label="Opções de resposta">
+          ${opts.map((o, i) => `
+            <button class="quiz-opt" data-i="${i}" aria-label="Opção ${String.fromCharCode(65+i)}: ${o}">
+              <strong>${String.fromCharCode(65+i)}.</strong> ${o}
+            </button>`).join('')}
+        </div>
+        <div id="quiz-fb" aria-live="polite"></div>
+        <div id="quiz-proximo" class="quiz-next-wrap" hidden>
+          <button class="btn btn-primary" id="btn-proximo">
+            ${S.quizIdx < QUIZ.length - 1 ? 'Próxima pergunta →' : 'Ver resultado final'}
+          </button>
+        </div>
+      </div>`;
+
+    stage.querySelectorAll('.quiz-opt').forEach(btn =>
+      btn.addEventListener('click', () => responder(+btn.dataset.i))
+    );
+    qs('#btn-proximo')?.addEventListener('click', proxima);
+  }
+
+  /* Processa a resposta selecionada */
+  function responder(i) {
+    if (S.quizAnswered) return;
+    S.quizAnswered = true;
+
+    const { ok, fb } = QUIZ[S.quizIdx];
+    const acertou = i === ok;
+    if (acertou) S.quizScore++;
+
+    stage.querySelectorAll('.quiz-opt').forEach((btn, j) => {
+      btn.disabled = true;
+      if (j === ok) btn.classList.add('correct');
+      else if (j === i) btn.classList.add('wrong');
+    });
+
+    const fbEl = qs('#quiz-fb');
+    fbEl.className  = 'quiz-fb ' + (acertou ? 'correct' : 'wrong');
+    fbEl.textContent = acertou ? fb.sim : fb.nao;
+    qs('#quiz-proximo').hidden = false;
+  }
+
+  /* Avança para a próxima pergunta ou exibe resultado */
+  function proxima() {
+    S.quizIdx++;
+    if (S.quizIdx < QUIZ.length) { renderizar(); return; }
+
+    /* Resultado final */
+    stage.innerHTML = '';
+    const pct = Math.round(S.quizScore / QUIZ.length * 100);
+    pfill.style.width = '100%';
+    ptext.textContent = 'Quiz concluído';
+
+    const [emoji, titulo, msg] = pct >= 83
+      ? ['🏆', 'Especialista em Sustentabilidade',
+         'Você demonstrou domínio sólido sobre o agronegócio sustentável. Excelente desempenho!']
+      : pct >= 66
+      ? ['🌱', 'Bom Desempenho',
+         'Você já conhece bastante sobre práticas sustentáveis. Continue aprofundando o conhecimento!']
+      : pct >= 50
+      ? ['📘', 'Desempenho Razoável',
+         'Revise o conteúdo desta página e tente novamente para melhorar sua pontuação.']
+      : ['🌾', 'Continue Estudando',
+         'Não desanime! Leia o material apresentado e refaça o quiz — cada tentativa é um passo adiante.'];
+
+    result.hidden   = false;
+    restart.hidden  = false;
+    result.innerHTML = `
+      <span class="quiz-result-emoji" aria-hidden="true">${emoji}</span>
+      <h3>${titulo}</h3>
+      <p class="quiz-score" aria-label="${S.quizScore} de ${QUIZ.length} acertos">
+        ${S.quizScore}/${QUIZ.length}
+        <span style="font-size:1rem;opacity:.6">(${pct}%)</span>
+      </p>
+      <p>${msg}</p>`;
+  }
+
+  /* Reinicia o quiz */
+  restart.addEventListener('click', () => {
+    S.quizIdx = 0; S.quizScore = 0;
+    result.hidden  = true;
+    restart.hidden = true;
+    renderizar();
+  });
+
+  renderizar();
+}
+
+/* ════════════════════════════════════════════════════
+   CONTADOR DE IMPACTO EM TEMPO REAL
+════════════════════════════════════════════════════ */
+function initImpact() {
+  const elWater = qs('#cnt-water');
+  const elCo2   = qs('#cnt-co2');
+  const elSoil  = qs('#cnt-soil');
+  if (!elWater) return;
+
+  /*
+   * Taxas por segundo estimadas com base em relatórios globais:
+   * Água:  ~1.247 L/s economizados por irrigação eficiente mundial
+   * CO₂:   ~38 kg/s evitados pela agricultura de baixo carbono
+   * Solo:  ~0.003 ha/s restaurados por práticas regenerativas globais
+   */
+  const taxa = { water: 1247, co2: 38, solo: .003 };
+  let decorrido = 0;
+
+  function formatar(n) {
+    if (n >= 1e6) return (n / 1e6).toFixed(2) + ' milhões';
+    if (n >= 1e3) return (n / 1e3).toFixed(1) + ' mil';
+    return Math.floor(n).toLocaleString('pt-BR');
+  }
+
+  const impactoSection = qs('#impacto');
+  if (!impactoSection) return;
+
+  observe([impactoSection], { threshold: .3 }, entry => {
+    if (!entry.isIntersecting || S.impactStarted) return;
+    S.impactStarted = true;
+
+    S.impactTimer = setInterval(() => {
+      decorrido += .1;
+      elWater.textContent = formatar(taxa.water * decorrido);
+      elCo2.textContent   = formatar(taxa.co2   * decorrido);
+      elSoil.textContent  = (taxa.solo * decorrido).toFixed(3);
+    }, 100);
+  });
+}
+
+/* ════════════════════════════════════════════════════
+   INICIALIZAÇÃO
+════════════════════════════════════════════════════ */
+function init() {
+  initFont();
+  initTheme();
+  initSpeech();
+  initNav();
+  initReveal();
+  initBenBars();
+  initDadoCounters();
+  initTimeline();
+  initTechCards();
+  initQuiz();
+  initImpact();
+}
+
+document.readyState === 'loading'
+  ? document.addEventListener('DOMContentLoaded', init)
+  : init();
+JS_EOF
